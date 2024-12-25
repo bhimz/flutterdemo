@@ -10,7 +10,9 @@ class CategoryScreen extends StatelessWidget {
   });
 
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
+    final filteredMeals = dummyMeals
+        .where((meal) => meal.categories.contains(category.id))
+        .toList();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealsScreen(
@@ -23,22 +25,20 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pick a category'),
+    return GridView(
+      padding: const EdgeInsets.all(20),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1.5,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
       ),
-      body: GridView(
-        padding: const EdgeInsets.all(20),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1.5,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-        ),
-        children: availableCategories
-            .map((category) => CategoryItem(category: category, onTap: _selectCategory,))
-            .toList(),
-      ),
+      children: availableCategories
+          .map((category) => CategoryItem(
+                category: category,
+                onTap: _selectCategory,
+              ))
+          .toList(),
     );
   }
 }
