@@ -42,7 +42,7 @@ class MealsScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .titleLarge!
+                      .bodyLarge!
                       .copyWith(color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
