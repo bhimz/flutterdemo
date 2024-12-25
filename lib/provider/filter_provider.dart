@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mealsapp/provider/meal_provider.dart';
 import 'package:mealsapp/screen/filters.dart';
 
 const kInitialFilters = {
@@ -23,3 +24,23 @@ class FilterNotifier extends StateNotifier<Map<FilterOptions, bool>> {
 final filterProvider = StateNotifierProvider<FilterNotifier, Map<FilterOptions, bool>>((ref) {
   return FilterNotifier();
 });
+
+final filteredMealsProvider = Provider((ref) {
+  final meals = ref.watch(mealProvider);
+  final activeFilters = ref.watch(filterProvider);
+  return meals.where((meal) {
+    if (activeFilters[FilterOptions.glutenFree]! && !meal.isGlutenFree) {
+      return false;
+    }
+    if (activeFilters[FilterOptions.lactoseFree]! && !meal.isLactoseFree) {
+      return false;
+    }
+    if (activeFilters[FilterOptions.vegetarian]! && !meal.isVegetarian) {
+      return false;
+    }
+    if (activeFilters[FilterOptions.vegan]! && !meal.isVegan) {
+      return false;
+    }
+    return true;
+  }).toList();
+},);
