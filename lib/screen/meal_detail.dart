@@ -16,13 +16,19 @@ class MealDetailScreen extends ConsumerWidget {
         title: Text(meal.title),
         actions: [
           IconButton(
-            icon: isFavorite ? const Icon(Icons.star) : const Icon(Icons.star_border),
+            icon: isFavorite
+                ? const Icon(Icons.star)
+                : const Icon(Icons.star_border),
             onPressed: () {
-              final isAdded = ref.read(favouriteMealProvider.notifier).toggleFavourite(meal);
+              final isAdded = ref
+                  .read(favouriteMealProvider.notifier)
+                  .toggleFavourite(meal);
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(isAdded ? 'Added to favourites' : 'Removed from favourites'),
+                  content: Text(isAdded
+                      ? 'Added to favourites'
+                      : 'Removed from favourites'),
                 ),
               );
             },
@@ -32,11 +38,14 @@ class MealDetailScreen extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              meal.imageUrl,
-              fit: BoxFit.cover,
-              height: 300,
-              width: double.infinity,
+            Hero(
+              tag: meal.id,
+              child: Image.network(
+                meal.imageUrl,
+                fit: BoxFit.cover,
+                height: 300,
+                width: double.infinity,
+              ),
             ),
             const SizedBox(height: 14),
             Text(
