@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mealsapp/data/dummy_data.dart';
 import 'package:mealsapp/model/category.dart';
 import 'package:mealsapp/model/meal.dart';
+import 'package:mealsapp/route/page_route.dart';
 import 'package:mealsapp/widget/category_item.dart';
 import 'package:mealsapp/screen/meals.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({
-    super.key,
-    required this.availableMeals
-  });
+  const CategoryScreen({super.key, required this.availableMeals});
 
   final List<Meal> availableMeals;
 
@@ -18,12 +16,18 @@ class CategoryScreen extends StatelessWidget {
         .where((meal) => meal.categories.contains(category.id))
         .toList();
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => MealsScreen(
+      createRoute(
+        target: MealsScreen(
           title: category.title,
           meals: filteredMeals,
         ),
       ),
+      //MaterialPageRoute(
+      //  builder: (ctx) => MealsScreen(
+      //    title: category.title,
+      //    meals: filteredMeals,
+      //  ),
+      //),
     );
   }
 

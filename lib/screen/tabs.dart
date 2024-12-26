@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mealsapp/provider/favourite_meal_provider.dart';
 import 'package:mealsapp/provider/filter_provider.dart';
+import 'package:mealsapp/route/page_route.dart';
 import 'package:mealsapp/screen/categories.dart';
 import 'package:mealsapp/screen/filters.dart';
 import 'package:mealsapp/screen/meals.dart';
@@ -28,10 +29,11 @@ class _TabScreenState extends ConsumerState<TabScreen> {
   void _onSelectScreen(String identifier) async{
     Navigator.of(context).pop();
     if (identifier == 'filters') {
-      Navigator.of(context).push<Map<FilterOptions, bool>>(
-        MaterialPageRoute(
-          builder: (ctx) => FilterScreen(),
-        ),
+      Navigator.of(context).push(
+        createRoute(target:  FilterScreen(), transition: TransitionType.slideLeft),
+        //MaterialPageRoute(
+        //  builder: (ctx) => FilterScreen(),
+        //),
       );
     }
   }
@@ -39,7 +41,7 @@ class _TabScreenState extends ConsumerState<TabScreen> {
   @override
   Widget build(BuildContext context) {
     final availableMeals = ref.watch(filteredMealsProvider);
-    
+
     Widget activePage = CategoryScreen(availableMeals: availableMeals);
     var activePageTitle = "Categories";
     if (_selectedPageIndex == 1) {
